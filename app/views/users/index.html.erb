@@ -1,0 +1,64 @@
+<style>
+#wrapper{
+    height:400px;
+    width: 700px;
+    border-style: 1px black;
+    border-style: solid;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#left{
+    width:500px;
+    margin-left: 100px;
+}
+
+#right{
+    width:500px;
+}
+
+#title{
+    text-align: center;
+}
+
+</style>
+
+<h1 id="title">Welcome to the Event App</h1>
+<div id="wrapper">
+    <div id="left">
+        <h2>Register</h2>
+        <form action="/users/create" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <p>First Name: <input type="text" name="first_name" /></p>
+            <p>Last Name: <input type="text" name="last_name" /></p>
+            <p>Email: <input type="text" name="email" /></p>
+            <p>Location: <input type="text" name="location" />
+            <select name="state">
+                <option selected disabled>State</option>
+                <option value="AZ">AZ</option>
+                <option value="CA">CA</option>
+                <option value="DC">DC</option>
+                <option value="IL">IL</option>
+                <option value="NY">NY</option>
+                <option value="VA">VA</option>
+            </select></p>
+            <p>Pasword: <input type="password" name="password" /></p>
+            <p>*Password should be at least 8 characters.</p>
+            <p>Confirm PW: <input type="password" name="password_confirmation" /></p>
+            <input type="submit" value="Register" />
+        </form>
+    </div>
+
+    <div id="right">
+        <h2>Login</h2>
+        <form action="/sessions/create" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <p>Email: <input type="text" name="email" /></p>
+            <p>Pasword: <input type="password" name="password" /></p>
+            <input type="submit" value="Login" />
+        </form>
+    </div>
+
+</div>

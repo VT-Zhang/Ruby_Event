@@ -1,0 +1,23 @@
+<div id="top">
+    <a href="/events" data-method="get">Events Dashboard</a> |
+    <a href="/sessions" data-method="delete">Logout</a>
+</div>
+
+<h2>Edit Your Profile</h2>
+<form action="/users/<%=session[:user_id]%>/update" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="patch" />
+    <p>First Name: <input type="text" name="first_name" value="<%= @user.first_name %>"></p>
+    <p>Last Name: <input type="text" name="last_name" value="<%= @user.last_name %>"></p>
+    <p>Email: <input type="text" name="email" value="<%= @user.email %>"></p>
+    <p>Location: <input type="text" name="location" value="<%= @user.location %>">
+        <select name="state">
+            <option value="AZ" <% if @user.state == "AZ"%> selected <% end %>>AZ</option>
+            <option value="CA" <% if @user.state == "CA"%> selected <% end %>>CA</option>
+            <option value="DC" <% if @user.state == "DC"%> selected <% end %>>DC</option>
+            <option value="IL" <% if @user.state == "IL"%> selected <% end %>>IL</option>
+            <option value="NY" <% if @user.state == "NY"%> selected <% end %>>NY</option>
+            <option value="VA" <% if @user.state == "VA"%> selected <% end %>>VA</option>
+        </select></p>
+    <input type="submit" value="Update Records" />
+</form>

@@ -1,0 +1,22 @@
+<div id="top">
+    <a href="/events" data-method="get">Events Dashboard</a> |
+    <a href="/sessions" data-method="delete">Logout</a>
+</div>
+
+<h2>Edit Your Event</h2>
+<form action="/events/<%=@event.id%>" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="patch" />
+    <p>Name: <input type="text" name="name" value="<%=@event.name%>"/></p>
+    <p>Date: <input type="date" name="date" value="<%=@event.date%>"/></p>
+    <p>Location: <input type="text" name="location" value="<%=@event.location%>" />
+    State: <select name="state">
+        <option value="AZ" <% if @event.state == "AZ"%> selected <% end %>>AZ</option>
+        <option value="CA" <% if @event.state == "CA"%> selected <% end %>>CA</option>
+        <option value="DC" <% if @event.state == "DC"%> selected <% end %>>DC</option>
+        <option value="IL" <% if @event.state == "IL"%> selected <% end %>>IL</option>
+        <option value="NY" <% if @event.state == "NY"%> selected <% end %>>NY</option>
+        <option value="VA" <% if @event.state == "VA"%> selected <% end %>>VA</option>
+    </select></p>
+    <input type="submit" value="Update Event" />
+</form>

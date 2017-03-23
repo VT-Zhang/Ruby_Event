@@ -1,0 +1,83 @@
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+</style>
+
+<div id="top">
+    <h2>Welcome, <%= session[:name] %>!</h2>
+    <a href="/users/<%=session[:user_id]%>/edit" data-method="get">Edit My Profile</a> |
+    <a href="/sessions" data-method="delete">Logout</a>
+</div>
+
+<h3>Here are some of the events at YOUR state: </h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Location</th>
+    <th>State</th>
+    <th>Host</th>
+    <th>Action/Status</th>
+  </tr>
+  <% @event_same_state.each do |event| %>
+  <tr>
+      <td><a href="/events/<%=event.id%>/show" data-method="get"><%= event.name %></a></td>
+      <td><%= event.date %></td>
+      <td><%= event.location %></td>
+      <td><%= event.state %></td>
+      <td><%= event.user.first_name %></td>
+      <td><% if @user == event.user %> <a href="/events/<%=event.id%>/edit" data-method="get">Edit</a> | <a href="/events/<%=event.id%>" data-method="delete">Delete</a>
+          <% elsif @user.events_participated.exists?(event.id) %>Joining <a href="/events/<%=event.id%>/participation" data-method="delete">Cancel</a>
+          <% else %> <a href="/events/<%=event.id%>/participation" data-method="post">Join</a><% end %></td>
+  </tr>
+  <% end %>
+</table>
+<br/>
+
+<h3>Here are some of the events on OTHER state: </h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Location</th>
+    <th>State</th>
+    <th>Host</th>
+    <th>Action/Status</th>
+  </tr>
+  <% @event_rest.each do |event| %>
+  <tr>
+      <td><a href="/events/<%=event.id%>/show" data-method="get"><%= event.name %></a></td>
+      <td><%= event.date %></td>
+      <td><%= event.location %></td>
+      <td><%= event.state %></td>
+      <td><%= event.user.first_name %></td>
+      <td><% if @user == event.user %> <a href="/events/<%=event.id%>/edit" data-method="get">Edit</a> | <a href="/events/<%=event.id%>" data-method="delete">Delete</a>
+          <% elsif @user.events_participated.exists?(event.id) %>Joining <a href="/events/<%=event.id%>/participation" data-method="delete">Cancel</a>
+          <% else %> <a href="/events/<%=event.id%>/participation" data-method="post">Join</a><% end %></td>
+  </tr>
+  <% end %>
+</table>
+<br />
+
+<h2>Add Event</h2>
+<form action="/events/create" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <p>Name: <input type="text" name="name" /></p>
+    <p>Date: <input type="date" name="date" value="<%= Date.today %>"/></p>
+    <p>Location: <input type="text" name="location" />
+    State: <select name="state">
+        <option value="" disabled selected>Select State</option>
+        <option value="AZ">AZ</option>
+        <option value="CA">CA</option>
+        <option value="DC">DC</option>
+        <option value="IL">IL</option>
+        <option value="NY">NY</option>
+        <option value="VA">VA</option>
+    </select></p>
+    <input type="submit" value="Add Event" />
+</form>

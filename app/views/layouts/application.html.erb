@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BeltReviewer</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <style>
+   .red{
+       color:red;
+   }
+   .green{
+       color:green;
+   }
+   #message{
+       margin-left: 200px;
+   }
+ </style>
+</head>
+<body>
+    <div id="message">
+        <% if flash[:errors] %>
+            <% flash[:errors].each do |e| %>
+                <p class="red"><%= e %></p>
+            <% end %>
+        <% end %>
+
+        <% if flash[:notices] %>
+            <% flash[:notices].each do |notice| %>
+                <p class="green"><%= notice %></p>
+            <% end %>
+        <% end %>
+    </div>
+    <%= yield %>
+    <%= console %>
+</body>
+</html>
